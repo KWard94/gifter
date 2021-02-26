@@ -20,7 +20,7 @@ export default function Call() {
   };
 
   return (
-    <div>
+    <div className="list">
       <h1>API CALL DATA</h1>
       <h3>THE LIST OF GIFTS</h3>
       {gifts.map((gift) => {
