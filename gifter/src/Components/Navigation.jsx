@@ -7,8 +7,8 @@ export default function Navigation() {
       <Link className="link" to="/">
         Home
       </Link>
-      <Link className="link" to="/list">
-        List of Gifts
+      <Link className="link" to="/gifts">
+        Full List of Gifts
       </Link>
     </div>
   );
