@@ -19,25 +19,26 @@ export default function GiftInfo({ match }) {
     } catch (error) {
       console.log(error);
     }
-    // const url = giftList.image;
   };
   return (
-    <div className="details">
-      <h3>THE DETAIL OF GIFTS</h3>
-      <h1>
-        This gift is the {gifts.name}, {gifts.price}
-      </h1>
-      <h3>It is perfect for your friend who is: {gifts.attribute}</h3>
-      <p>
-        <img src={gifts.image} alt="Display of Gift" />
-      </p>
-      <p>{gifts.description}</p>
-      <h6>
-        Let's wrap this up....{" "}
-        <a href={gifts.url} target="_blank" rel="noreferrer">
-          <button className="toShop">Shop for this gift!</button>
-        </a>
-      </h6>
-    </div>
+    gifts && (
+      <div className="details">
+        <h3>THE DETAIL OF GIFTS</h3>
+        <h1>
+          This gift is the {gifts.name}, {gifts.price}
+        </h1>
+        <h3>It is perfect for your friend who is: {gifts.attribute}</h3>
+        <p>
+          <img src={gifts.image} alt="Display of Gift" />
+        </p>
+        <p>{gifts.description}</p>
+        <h6>
+          Let's wrap this up....{" "}
+          <a href={gifts.url} target="_blank" rel="noreferrer">
+            <button className="toShop">Shop for this gift!</button>
+          </a>
+        </h6>
+      </div>
+    )
   );
 }

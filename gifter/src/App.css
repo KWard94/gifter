@@ -6,6 +6,12 @@ ul {
   background-color: #f7f7ff;
 }
 
+.attributes {
+  /* color: red; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .footer {
   background-color: #577399;
   width: 100%;
