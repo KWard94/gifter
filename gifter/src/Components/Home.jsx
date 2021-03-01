@@ -12,7 +12,6 @@ export default function GiftInfo({ match }) {
       // const url = `http://localhost:4500/attributes`;
 
       const attributeList = await axios.get(url);
-      console.log(attributeList.data);
       setAttributes(attributeList.data);
     } catch (error) {
       console.log(error);

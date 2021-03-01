@@ -5,6 +5,8 @@ import Footer from "./Components/Footer.jsx";
 import { Switch, Route } from "react-router-dom";
 import List from "./Components/List.jsx";
 import GiftInfo from "./Components/GiftInfo";
+import SuggestedList from "./Components/SuggestedList.jsx";
+import Suggested from "./Components/Suggested.jsx";
 
 function App() {
   return (
@@ -14,6 +16,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/gifts" component={List} />
+        <Route exact path="/suggested" component={SuggestedList} />
+        <Route exact path="/suggestion" component={Suggested} />
+
         <Route
           exact
           path="/gifts/:id"
