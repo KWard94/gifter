@@ -10,6 +10,9 @@ export default function Navigation() {
       <Link className="link" to="/gifts">
         Full List of Gifts
       </Link>
+      <Link className="link" to="/suggestion">
+        Suggest a Gift to Add
+      </Link>
     </div>
   );
 }
