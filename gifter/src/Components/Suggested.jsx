@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function Suggested() {
   const attribute = [
@@ -52,6 +53,9 @@ export default function Suggested() {
     if (!suggestion.name || suggestion.name === "") {
       alert("A Name is Required");
       return;
+    } else if (!suggestion.attribute) {
+      alert("An Attribute is Required");
+      return;
     } else {
       postSuggestion().then(() => history.push(`/suggested`));
     }
@@ -68,6 +72,15 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Enter a Gift Name"
             name="name"
+          />
+        </Form.Group>
+        <Form.Group className="price-container">
+          <Form.Label>Price: $</Form.Label>
+          <Form.Control
+            type="text"
+            onChange={handleChange}
+            placeholder="Enter a Price"
+            name="price"
           />
         </Form.Group>
         <Form.Group className="dropdown-container">
@@ -87,6 +100,29 @@ export default function Suggested() {
             ))}
           </select>
         </Form.Group>
+        <Form.Group className="textarea">
+          {/* <Form.Label>Description:</Form.Label> */}
+          <Form.Control
+            type="text"
+            as="textarea"
+            rows={5}
+            onChange={handleChange}
+            placeholder="Please Enter a Description"
+            name="description"
+          />
+        </Form.Group>
+        <Form.Group className="url">
+          <Form.Label>Url:</Form.Label>
+          <Form.Control
+            type="text"
+            as="textarea"
+            rows={2}
+            onChange={handleChange}
+            placeholder="Please Enter the URL to find this gift"
+            name="description"
+          />
+        </Form.Group>
+        <Button type="submit">Submit</Button>
       </Form>
       <Link to="/suggested">See the List of already Suggested Gifts Here</Link>
     </div>
