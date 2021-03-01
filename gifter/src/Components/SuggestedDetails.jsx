@@ -14,7 +14,6 @@ export default function SuggestedDetails({ match }) {
       // const url = `http://localhost:4500/gifts/${id}`;
 
       const suggestedDet = await axios.get(url);
-      console.log(suggestedDet.data);
       setSuggested(suggestedDet.data);
     } catch (error) {
       console.log(error);
@@ -50,6 +49,9 @@ export default function SuggestedDetails({ match }) {
           </a>
           <button onClick={() => deleteSuggested()}>
             Delete This Suggestion
+          </button>
+          <button onClick={() => history.push(`/edit/${suggested._id}`)}>
+            Edit This Suggestion
           </button>
         </h6>
       </div>

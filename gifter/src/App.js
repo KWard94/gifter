@@ -7,7 +7,7 @@ import List from "./Components/List.jsx";
 import GiftInfo from "./Components/GiftInfo";
 import SuggestedList from "./Components/SuggestedList.jsx";
 import Suggested from "./Components/Suggested.jsx";
-import SugestedDetails from "./Components/SuggestedDetails.jsx";
+import SuggestedEdit from "./Components/SuggestedEdit.jsx";
 import SuggestedDetails from "./Components/SuggestedDetails.jsx";
 
 function App() {
@@ -32,7 +32,12 @@ function App() {
             <SuggestedDetails match={routerProps.match} />
           )}
         />
-        <Home />
+        <Route
+          exact
+          path="/edit/:id"
+          render={(routerProps) => <SuggestedEdit match={routerProps.match} />}
+        />
+        {/* <Home /> */}
       </Switch>
 
       <Footer />
