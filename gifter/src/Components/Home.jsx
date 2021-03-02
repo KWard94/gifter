@@ -4,7 +4,20 @@ import axios from "axios";
 export default function GiftInfo({ match }) {
   const [attributes, setAttributes] = useState([]);
 
+  const [select, setSelect] = useState();
+
   useEffect(() => getAttributes(), []);
+
+  const attSelected = [];
+  const handleSelect = () => {
+    attSelected.push("hello");
+    setSelect(attSelected);
+    console.log(attributes[0].attribute);
+  };
+  //use dom manipulation techniques to access button value?
+  //or create routes for the attribute names for individial get requests for each list for each attribute?
+  // I am unsure how to logic out the matching of button value to the gift list
+  console.log(select);
 
   const getAttributes = async () => {
     try {
@@ -35,7 +48,9 @@ export default function GiftInfo({ match }) {
           return (
             <ul>
               <li>
-                <button>{attribute.attribute}</button>
+                <button id="att-button" onClick={() => handleSelect()}>
+                  {attribute.attribute}
+                </button>
               </li>
             </ul>
           );
