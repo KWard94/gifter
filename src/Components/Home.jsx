@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-export default function GiftInfo({ match }) {
+export default function Home() {
+  const handleSelect = (att) => {
+    const buttonAtt = att.target.value;
+    setSort(buttonAtt);
+  };
+
+  //This is the function for the user input of the gift recipient name
+  const handleName = (a) => {
+    const inputName = toTitleCase(a.target.value);
+    // const inputName = a.target.value;
+    console.log(inputName);
+    setName(inputName);
+  };
+
+  const toTitleCase = (string) =>
+    string
+      ? string
+          .split(" ")
+          .map((word) => word[0].toUpperCase().concat(word.slice(1)))
+          .join(" ")
+      : null;
+
+  // Below is the API call for the list of attrubutes from the database
+
   const [attributes, setAttributes] = useState([]);
 
-  const [select, setSelect] = useState();
-
   useEffect(() => getAttributes(), []);
-
-  const attSelected = [];
-  const handleSelect = () => {
-    attSelected.push("hello");
-    setSelect(attSelected);
-    console.log(attributes[0].attribute);
-  };
-  //use dom manipulation techniques to access button value?
-  //or create routes for the attribute names for individial get requests for each list for each attribute?
-  // I am unsure how to logic out the matching of button value to the gift list
-  //maybe re render the full list and use .filter method? then I can use dom manipulation to get the value of button, and filter the API call results on one component rather than a component for each list.
-  console.log(select);
-
   const getAttributes = async () => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/attributes`;
@@ -31,6 +40,38 @@ export default function GiftInfo({ match }) {
       console.log(error);
     }
   };
+  //Below is the API call for the gift options
+
+  const [gifts, setGifts] = useState([]);
+
+  const [id, setId] = useState();
+  const history = useHistory();
+
+  useEffect(() => getGifts(), []);
+
+  const getGifts = async () => {
+    try {
+      const url = "https://gifter-backend-api.herokuapp.com/gifts";
+      // const url = "http://localhost:4500/gifts/";
+
+      const giftList = await axios.get(url);
+      setGifts(giftList.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [sort, setSort] = useState();
+
+  const sorted = gifts.filter((att) => att.attribute === sort);
+
+  const [name, setName] = useState();
+
+  const handleDetails = (id) => {
+    history.push(`/gifts/${id}`);
+    setId(id);
+  };
+
   return (
     <div className="homepage">
       <div className="intro">
@@ -41,7 +82,12 @@ export default function GiftInfo({ match }) {
       </div>
       <form>
         <h4>
-          Who is this gift for? <input type="text" className="name" />
+          Who is this gift for?{" "}
+          <input
+            type="text"
+            className="name"
+            onChange={(name) => handleName(name)}
+          />
         </h4>
       </form>
       <div className="attributes">
@@ -49,10 +95,39 @@ export default function GiftInfo({ match }) {
           return (
             <ul>
               <li>
-                <button id="att-button" onClick={() => handleSelect()}>
+                <button
+                  id="att-button"
+                  value={attribute.attribute}
+                  onClick={(att) => handleSelect(att, "value")}
+                >
                   {attribute.attribute}
                 </button>
               </li>
+            </ul>
+          );
+        })}
+      </div>
+
+      {/* below here is rendered list of suggested gifts*/}
+
+      <div className="list">
+        {sort ? (
+          <h3>
+            Your Gift Suggestions for {name ? name : "your friend"} who is{" "}
+            {sort}!
+          </h3>
+        ) : null}
+
+        {sorted.map((gift) => {
+          return (
+            <ul className="gift-list" key={gift._id}>
+              <li>{gift.name}</li>
+              <button
+                className="view-details"
+                onClick={() => handleDetails(gift._id)}
+              >
+                View Gift Details
+              </button>
             </ul>
           );
         })}
