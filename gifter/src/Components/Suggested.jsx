@@ -41,7 +41,6 @@ export default function Suggested() {
     }
   };
 
-  //maybe remove spread operator?
   const handleChange = (event) =>
     setSuggestion({ ...suggestion, [event.target.name]: event.target.value });
 

@@ -37,7 +37,6 @@ function App() {
           path="/edit/:id"
           render={(routerProps) => <SuggestedEdit match={routerProps.match} />}
         />
-        {/* <Home /> */}
       </Switch>
 
       <Footer />
