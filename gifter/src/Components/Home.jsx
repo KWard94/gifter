@@ -10,10 +10,19 @@ export default function Home() {
 
   //This is the function for the user input of the gift recipient name
   const handleName = (a) => {
-    const inputName = a.target.value;
+    const inputName = toTitleCase(a.target.value);
+    // const inputName = a.target.value;
     console.log(inputName);
-    return inputName;
+    setName(inputName);
   };
+
+  const toTitleCase = (string) =>
+    string
+      ? string
+          .split(" ")
+          .map((word) => word[0].toUpperCase().concat(word.slice(1)))
+          .join(" ")
+      : null;
 
   // Below is the API call for the list of attrubutes from the database
 
@@ -55,6 +64,8 @@ export default function Home() {
   const [sort, setSort] = useState();
 
   const sorted = gifts.filter((att) => att.attribute === sort);
+
+  const [name, setName] = useState();
 
   const handleDetails = (id) => {
     history.push(`/gifts/${id}`);
@@ -100,7 +111,13 @@ export default function Home() {
       {/* below here is rendered list of suggested gifts*/}
 
       <div className="list">
-        <h3>Your Gift Suggestions for someone who is {sort}!</h3>
+        {sort ? (
+          <h3>
+            Your Gift Suggestions for {name ? name : "your friend"} who is{" "}
+            {sort}!
+          </h3>
+        ) : null}
+
         {sorted.map((gift) => {
           return (
             <ul className="gift-list" key={gift._id}>
