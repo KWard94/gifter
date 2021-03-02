@@ -17,6 +17,7 @@ export default function GiftInfo({ match }) {
   //use dom manipulation techniques to access button value?
   //or create routes for the attribute names for individial get requests for each list for each attribute?
   // I am unsure how to logic out the matching of button value to the gift list
+  //maybe re render the full list and use .filter method? then I can use dom manipulation to get the value of button, and filter the API call results on one component rather than a component for each list.
   console.log(select);
 
   const getAttributes = async () => {
