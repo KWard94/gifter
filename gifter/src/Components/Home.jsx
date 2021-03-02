@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 export default function Home() {
+  //Constant declarations and states
+  const [loading, setLoading] = useState(false);
+  const [attributes, setAttributes] = useState([]);
+  const [gifts, setGifts] = useState([]);
+  const [id, setId] = useState();
+  const history = useHistory();
+  const [sort, setSort] = useState();
+  const sorted = gifts.filter((att) => att.attribute === sort);
+  const [name, setName] = useState();
+
+  //function declarations
+  //below is the onClick function that sets state for the filter method which renders the suggested gifts
   const handleSelect = (att) => {
     const buttonAtt = att.target.value;
     setSort(buttonAtt);
   };
 
-  //This is the function for the user input of the gift recipient name
+  //below is the function that pushes the user to the details of the suggested gift, selected by unique id
+  const handleDetails = (id) => {
+    history.push(`/gifts/${id}`);
+    setId(id);
+  };
+
+  //below is the function for the user input of the gift recipient name. it will capitalize the first letter of the name, and sets a state for rendering items for that name
   const handleName = (a) => {
     const inputName = toTitleCase(a.target.value);
-    // const inputName = a.target.value;
-    console.log(inputName);
     setName(inputName);
   };
 
+  //below function is the first letter to capital function for the handleName function
   const toTitleCase = (string) =>
     string
       ? string
@@ -25,9 +43,6 @@ export default function Home() {
       : null;
 
   // Below is the API call for the list of attrubutes from the database
-
-  const [attributes, setAttributes] = useState([]);
-
   useEffect(() => getAttributes(), []);
   const getAttributes = async () => {
     try {
@@ -36,19 +51,14 @@ export default function Home() {
 
       const attributeList = await axios.get(url);
       setAttributes(attributeList.data);
+      setLoading(true);
     } catch (error) {
       console.log(error);
     }
   };
+
   //Below is the API call for the gift options
-
-  const [gifts, setGifts] = useState([]);
-
-  const [id, setId] = useState();
-  const history = useHistory();
-
   useEffect(() => getGifts(), []);
-
   const getGifts = async () => {
     try {
       const url = "https://gifter-backend-api.herokuapp.com/gifts";
@@ -61,17 +71,7 @@ export default function Home() {
     }
   };
 
-  const [sort, setSort] = useState();
-
-  const sorted = gifts.filter((att) => att.attribute === sort);
-
-  const [name, setName] = useState();
-
-  const handleDetails = (id) => {
-    history.push(`/gifts/${id}`);
-    setId(id);
-  };
-
+  //below the information from the attribute call is rendered on screen
   return (
     <div className="homepage">
       <div className="intro">
@@ -91,21 +91,25 @@ export default function Home() {
         </h4>
       </form>
       <div className="attributes">
-        {attributes.map((attribute) => {
-          return (
-            <ul>
-              <li>
-                <button
-                  id="att-button"
-                  value={attribute.attribute}
-                  onClick={(att) => handleSelect(att, "value")}
-                >
-                  {attribute.attribute}
-                </button>
-              </li>
-            </ul>
-          );
-        })}
+        {loading ? (
+          attributes.map((attribute) => {
+            return (
+              <ul>
+                <li>
+                  <button
+                    id="att-button"
+                    value={attribute.attribute}
+                    onClick={(att) => handleSelect(att, "value")}
+                  >
+                    {attribute.attribute}
+                  </button>
+                </li>
+              </ul>
+            );
+          })
+        ) : (
+          <Spinner animation="border" variant="secondary" />
+        )}
       </div>
 
       {/* below here is rendered list of suggested gifts*/}

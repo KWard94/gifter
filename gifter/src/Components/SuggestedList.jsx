@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { Spinner } from "react-bootstrap";
 
 export default function SuggestedList() {
   const [suggest, setSuggest] = useState([]);
   const [id, setId] = useState();
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  useEffect(() => getSuggested(), []);
+  const handleDetails = (id) => {
+    history.push(`/suggestion/${id}`);
+    setId(id);
+  };
 
+  useEffect(() => getSuggested(), []);
   const getSuggested = async () => {
     try {
       const url = "https://gifter-backend-api.herokuapp.com/suggestion";
@@ -16,55 +22,33 @@ export default function SuggestedList() {
 
       const suggestedList = await axios.get(url);
       setSuggest(suggestedList.data);
+      setLoading(true);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleDetails = (id) => {
-    history.push(`/suggestion/${id}`);
-    setId(id);
-  };
-
   return (
     <div className="suggested-page">
       <div className="suggested-list">
-        {suggest.map((suggested) => {
-          return (
-            <ul>
-              <li>{suggested.name}</li>
-              <button
-                className="view-details"
-                onClick={() => handleDetails(suggested._id)}
-              >
-                See Details
-              </button>
-            </ul>
-          );
-        })}
+        {loading ? (
+          suggest.map((suggested) => {
+            return (
+              <ul>
+                <li>{suggested.name}</li>
+                <button
+                  className="view-details"
+                  onClick={() => handleDetails(suggested._id)}
+                >
+                  See Details
+                </button>
+              </ul>
+            );
+          })
+        ) : (
+          <Spinner animation="border" variant="secondary" />
+        )}
       </div>
     </div>
   );
 }
-
-// return (
-//     gifts && (
-//       <div className="list">
-//         <h1>API CALL DATA</h1>
-//         <h3>THE LIST OF GIFTS</h3>
-//         {gifts.map((gift) => {
-//           return (
-//             <ul className="gift-list" key={gift._id}>
-//               <li>{gift.name}</li>
-//               <button
-//                 className="view-details"
-//                 onClick={() => handleDetails(gift._id)}
-//               >
-//                 View Gift Details
-//               </button>
-//             </ul>
-//           );
-//         })}
-//       </div>
-//     )
-//   );
