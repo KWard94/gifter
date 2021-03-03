@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
 
 export default function Suggested() {
+  //constants for form definitions
   const attribute = [
     "Creative",
     "Curious",
@@ -23,11 +25,35 @@ export default function Suggested() {
     url: "",
   };
 
+  //set constants for state
   const [suggestion, setSuggestion] = useState(initSuggest);
   const history = useHistory();
+  const [nameToast, setNameToast] = useState(false);
+  const [attToast, setAttToast] = useState(false);
 
-  //   useEffect(() => getSuggested(), []);
+  //function definitions
+  const handleChange = (event) =>
+    setSuggestion({ ...suggestion, [event.target.name]: event.target.value });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // gift names are required in this schema, force the user to give the suggestion a name. Attributes are required for function of the site
+    if (!suggestion.name || suggestion.name === "") {
+      setNameToast(true);
+      return;
+    } else if (!suggestion.attribute) {
+      setAttToast(true);
+      return;
+    } else {
+      postSuggestion().then(() => history.push(`/suggested`));
+    }
+  };
+
+  const toggleNameToast = () => setNameToast(!nameToast);
+  const toggleAttToast = () => setAttToast(!attToast);
+
+  // axios call to post suggestion to database
   const postSuggestion = async () => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/suggestion`;
@@ -41,28 +67,9 @@ export default function Suggested() {
     }
   };
 
-  const handleChange = (event) =>
-    setSuggestion({ ...suggestion, [event.target.name]: event.target.value });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // gift names are REQUIRED in this schema
-    // force the user to give the character a name before they can submit
-    if (!suggestion.name || suggestion.name === "") {
-      alert("A Name is Required");
-      return;
-    } else if (!suggestion.attribute) {
-      alert("An Attribute is Required");
-      return;
-    } else {
-      postSuggestion().then(() => history.push(`/suggested`));
-    }
-  };
-
   return (
-    <div>
-      <h1>SUGGESTION FORM HERE</h1>
+    <div className="suggest-form">
+      <h1>Please Submit a Suggestion for this Website!</h1>
       <Form className="create-form" onSubmit={handleSubmit}>
         <Form.Group className="name-container">
           <Form.Label>Gift Name:</Form.Label>
@@ -71,25 +78,28 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Enter a Gift Name"
             name="name"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="price-container">
-          <Form.Label>Price: $</Form.Label>
+          <Form.Label>Price:</Form.Label>
           <Form.Control
             type="text"
             onChange={handleChange}
             placeholder="Enter a Price"
             name="price"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="dropdown-container">
-          <Form.Label>Attribute:</Form.Label>
+          {/* <Form.Label>Attribute:</Form.Label> */}
           <select
             name="attribute"
             defaultValue="select"
             onChange={handleChange}
+            id="form-entry"
           >
-            <option value="select" disabled hidden>
+            <option id="select-menu" value="select" disabled hidden>
               Select an Attribute
             </option>
             {attribute.map((att) => (
@@ -108,6 +118,7 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Please Enter a Description"
             name="description"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="url">
@@ -119,11 +130,36 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Please Enter the URL to find this gift"
             name="description"
+            id="form-entry"
           />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+
+        <Toast className="alert" show={nameToast} onClose={toggleNameToast}>
+          <Toast.Header className="alert">Suggestion Name</Toast.Header>
+          <Toast.Body>
+            A Gift Name is Required to make a suggestion! Please enter a name of
+            your gift to continue
+          </Toast.Body>
+        </Toast>
+        <Toast className="alert" show={attToast} onClose={toggleAttToast}>
+          <Toast.Header>Attribute Selection</Toast.Header>
+          <Toast.Body>
+            An Attribute is required for your gift to be used in this app!
+            Please select an attribute from the dropdown menu in the above form
+            to continue.
+          </Toast.Body>
+        </Toast>
+
+        <Button type="submit" variant="secondary">
+          Suggest This Gift!
+        </Button>
       </Form>
-      <Link to="/suggested">See the List of already Suggested Gifts Here</Link>
+      <br />
+      <Link to="/suggested" id="suggested-link">
+        <Button variant="outline-info">
+          See the List of already Suggested Gifts Here
+        </Button>
+      </Link>
     </div>
   );
 }
