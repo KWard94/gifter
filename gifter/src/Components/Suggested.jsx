@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
@@ -35,6 +35,21 @@ export default function Suggested() {
   const handleChange = (event) =>
     setSuggestion({ ...suggestion, [event.target.name]: event.target.value });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // gift names are required in this schema, force the user to give the suggestion a name. Attributes are required for function of the site
+    if (!suggestion.name || suggestion.name === "") {
+      setNameToast(true);
+      return;
+    } else if (!suggestion.attribute) {
+      setAttToast(true);
+      return;
+    } else {
+      postSuggestion().then(() => history.push(`/suggested`));
+    }
+  };
+
   const toggleNameToast = () => setNameToast(!nameToast);
   const toggleAttToast = () => setAttToast(!attToast);
 
@@ -49,21 +64,6 @@ export default function Suggested() {
       //   setAttributes(attributeList.data);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // gift names are required in this schema, force the user to give the suggestion a name. Attributes are required for function of the site
-    if (!suggestion.name || suggestion.name === "") {
-      setNameToast(true);
-      return;
-    } else if (!suggestion.attribute) {
-      setAttToast(true);
-      return;
-    } else {
-      postSuggestion().then(() => history.push(`/suggested`));
     }
   };
 

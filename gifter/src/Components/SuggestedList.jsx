@@ -4,16 +4,19 @@ import axios from "axios";
 import { Spinner } from "react-bootstrap";
 
 export default function SuggestedList() {
+  //constant definitions for state
   const [suggest, setSuggest] = useState([]);
   const [id, setId] = useState();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+  //function definitions
   const handleDetails = (id) => {
     history.push(`/suggestion/${id}`);
     setId(id);
   };
 
+  // api call for the suggested gift list
   useEffect(() => getSuggested(), []);
   const getSuggested = async () => {
     try {
@@ -27,7 +30,7 @@ export default function SuggestedList() {
       console.log(error);
     }
   };
-
+  //info render on screen
   return (
     <div className="suggested-page">
       <div className="suggested-list">

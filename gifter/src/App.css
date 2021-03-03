@@ -73,6 +73,12 @@ ul {
   justify-content: center;
 }
 
+.crud {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem;
+}
+
 .link {
   color: var(--bg-main);
 }

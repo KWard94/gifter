@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 
 export default function SuggestedEdit({ match }) {
+  //constant definitions for edit form
   const initSuggest = {
     name: "",
     price: "",
@@ -23,39 +24,15 @@ export default function SuggestedEdit({ match }) {
     "Solitary",
   ];
 
+  //constant definitions for state
   const [suggested, setSuggested] = useState(initSuggest);
   const history = useHistory();
 
-  useEffect(() => getSuggested(match.params.id), []);
-
-  const getSuggested = async (id) => {
-    try {
-      const url = `https://gifter-backend-api.herokuapp.com/suggestion/${id}`;
-      // const url = `http://localhost:4500/gifts/${id}`;
-
-      const suggestedDet = await axios.get(url);
-      setSuggested(suggestedDet.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //603d3bd7c1ed2f0015d8a9f2
-  const updateSuggestion = async () => {
-    try {
-      const url = `https://gifter-backend-api.herokuapp.com/suggestion/${suggested._id}`;
-      //   const url = `https://gifter-backend-api.herokuapp.com/suggestion/603d3bd7c1ed2f0015d8a9f2`;
-      const suggestedGift = await axios.put(url, suggested);
-      return suggestedGift.data._id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //maybe remove spread operator?
+  //function definitions
   const handleChange = (event) =>
     setSuggested({ ...suggested, [event.target.name]: event.target.value });
 
+  //******************  start here- refactor this handle submit based on how i refactored the handle submit for suggestion post, then add the bootstrap toast function to the alert like in the suggestion post component
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -69,6 +46,30 @@ export default function SuggestedEdit({ match }) {
       return;
     } else {
       updateSuggestion().then(() => history.push(`/suggested`));
+    }
+  };
+
+  //api call for getting the suggestion to edit, find by id
+  useEffect(() => getSuggested(match.params.id), []);
+  const getSuggested = async (id) => {
+    try {
+      const url = `https://gifter-backend-api.herokuapp.com/suggestion/${id}`;
+
+      const suggestedDet = await axios.get(url);
+      setSuggested(suggestedDet.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //axios call for updating the suggested gift in the database
+  const updateSuggestion = async () => {
+    try {
+      const url = `https://gifter-backend-api.herokuapp.com/suggestion/${suggested._id}`;
+      const suggestedGift = await axios.put(url, suggested);
+      return suggestedGift.data._id;
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -133,6 +134,9 @@ export default function SuggestedEdit({ match }) {
             name="description"
           />
         </Form.Group>
+
+        {/* **********    add toast functionality here */}
+
         <Button type="submit">Submit</Button>
       </Form>
     </div>
