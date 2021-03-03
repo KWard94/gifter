@@ -1,54 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Spinner } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
-export default function SuggestedList() {
-  //constant definitions for state
-  const [suggest, setSuggest] = useState([]);
+export default function GiftList() {
+  //constant declarations
+  const [gifts, setGifts] = useState([]);
   const [id, setId] = useState();
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  //function definitions
+  //function declarations
   const handleDetails = (id) => {
-    history.push(`/suggestion/${id}`);
+    history.push(`/gifts/${id}`);
     setId(id);
   };
 
-  // api call for the suggested gift list
-  useEffect(() => getSuggested(), []);
-  const getSuggested = async () => {
+  //api call for gift list
+  useEffect(() => getGifts(), []);
+  const getGifts = async () => {
     try {
-      const url = "https://gifter-backend-api.herokuapp.com/suggestion";
+      const url = "https://gifter-backend-api.herokuapp.com/gifts";
+      // const url = "http://localhost:4500/gifts/";
 
-      const suggestedList = await axios.get(url);
-      setSuggest(suggestedList.data);
+      const giftList = await axios.get(url);
+      // console.log(giftList.data);
+      setGifts(giftList.data);
       setLoading(true);
     } catch (error) {
       console.log(error);
     }
   };
-  //info render on screen
+
   return (
-    suggest && (
+    gifts && (
       <div className="list">
-        <h3>List of Suggestions</h3>
+        <h3 id="list-title">THE LIST OF GIFTS</h3>
         <div className="gift-list">
           {loading ? (
-            suggest.map((suggested) => {
+            gifts.map((gift) => {
               return (
-                <ListGroup className="gift-list">
-                  <ListGroup.Item id="gift">{suggested.name}</ListGroup.Item>
+                <ListGroup className="gift-list" key={gift._id}>
+                  <ListGroup.Item id="gift">{gift.name}</ListGroup.Item>
                   <Button
                     variant="secondary"
                     className="view-details"
                     id="gift-button"
-                    onClick={() => handleDetails(suggested._id)}
+                    onClick={() => handleDetails(gift._id)}
                   >
-                    See Details
+                    View Gift Details
                   </Button>
                 </ListGroup>
               );
