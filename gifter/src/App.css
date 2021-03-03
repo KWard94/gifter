@@ -13,6 +13,7 @@ ul {
   text-align: center;
   background-color: var(--bg-main);
   color: var(--text-body);
+  font-family: Georgia, Times, "Times New Roman", serif;
 }
 
 .alert {
@@ -83,6 +84,7 @@ ul {
 
 .header-words {
   display: flex;
+  align-items: center;
   margin: 0 auto;
   width: 40%;
 }
@@ -250,8 +252,8 @@ ul {
 
 #title {
   font-size: 90px;
-  /* border: solid black 2px; */
   width: 80%;
+  font-family: cursive;
 }
 
 #list-title {
