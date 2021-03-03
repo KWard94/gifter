@@ -32,8 +32,9 @@ export default function SuggestedList() {
   };
   //info render on screen
   return (
-    <div className="suggested-page">
-      <div className="suggested-list">
+    <div className="list">
+      <h3>Lidst of Suggestions</h3>
+      <div className="gift-list">
         {loading ? (
           suggest.map((suggested) => {
             return (

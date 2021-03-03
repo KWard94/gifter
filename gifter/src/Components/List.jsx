@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Spinner } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
 
-export default function List() {
+export default function GiftList() {
   //constant declarations
   const [gifts, setGifts] = useState([]);
   const [id, setId] = useState();
@@ -35,25 +37,28 @@ export default function List() {
   return (
     gifts && (
       <div className="list">
-        <h1>API CALL DATA</h1>
         <h3>THE LIST OF GIFTS</h3>
-        {loading ? (
-          gifts.map((gift) => {
-            return (
-              <ul className="gift-list" key={gift._id}>
-                <li>{gift.name}</li>
-                <button
-                  className="view-details"
-                  onClick={() => handleDetails(gift._id)}
-                >
-                  View Gift Details
-                </button>
-              </ul>
-            );
-          })
-        ) : (
-          <Spinner animation="border" variant="secondary" />
-        )}
+        <div className="gift-list">
+          {loading ? (
+            gifts.map((gift) => {
+              return (
+                <ListGroup className="gift-list" key={gift._id}>
+                  <ListGroup.Item id="gift">{gift.name}</ListGroup.Item>
+                  <Button
+                    variant="secondary"
+                    className="view-details"
+                    id="gift-button"
+                    onClick={() => handleDetails(gift._id)}
+                  >
+                    View Gift Details
+                  </Button>
+                </ListGroup>
+              );
+            })
+          ) : (
+            <Spinner animation="border" variant="secondary" />
+          )}
+        </div>
       </div>
     )
   );
