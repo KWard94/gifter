@@ -115,14 +115,16 @@ export default function Home() {
               );
             })
           ) : (
-            <Spinner animation="border" variant="secondary" />
+            <div className="loader">
+              <Spinner animation="border" variant="secondary" />
+            </div>
           )}
         </div>
       </div>
 
       {/* below here is rendered list of suggested gifts*/}
 
-      <div className="list">
+      <div className="home-list">
         {sort ? (
           <h3>
             Your Gift Suggestions for {name ? name : "your friend"} who is{" "}
@@ -134,17 +136,17 @@ export default function Home() {
           return (
             <div className="results">
               <ListGroup className="gift-list" key={gift._id}>
-                <ListGroup.Item>{gift.name}</ListGroup.Item>
+                <ListGroup.Item id="list-item">{gift.name}</ListGroup.Item>
+                <Button
+                  variant="secondary"
+                  className="view-details"
+                  size="sm"
+                  id="home-gift-button"
+                  onClick={() => handleDetails(gift._id)}
+                >
+                  View Gift Details
+                </Button>
               </ListGroup>
-
-              <Button
-                variant="secondary"
-                className="view-details"
-                size="sm"
-                onClick={() => handleDetails(gift._id)}
-              >
-                View Gift Details
-              </Button>
             </div>
           );
         })}

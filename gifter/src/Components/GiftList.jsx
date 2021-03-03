@@ -37,7 +37,7 @@ export default function GiftList() {
   return (
     gifts && (
       <div className="list">
-        <h3>THE LIST OF GIFTS</h3>
+        <h3 id="list-title">THE LIST OF GIFTS</h3>
         <div className="gift-list">
           {loading ? (
             gifts.map((gift) => {

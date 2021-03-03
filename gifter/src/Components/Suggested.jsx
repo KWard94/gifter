@@ -78,6 +78,7 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Enter a Gift Name"
             name="name"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="price-container">
@@ -87,16 +88,18 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Enter a Price"
             name="price"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="dropdown-container">
-          <Form.Label>Attribute:</Form.Label>
+          {/* <Form.Label>Attribute:</Form.Label> */}
           <select
             name="attribute"
             defaultValue="select"
             onChange={handleChange}
+            id="form-entry"
           >
-            <option value="select" disabled hidden>
+            <option id="select-menu" value="select" disabled hidden>
               Select an Attribute
             </option>
             {attribute.map((att) => (
@@ -115,6 +118,7 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Please Enter a Description"
             name="description"
+            id="form-entry"
           />
         </Form.Group>
         <Form.Group className="url">
@@ -126,11 +130,12 @@ export default function Suggested() {
             onChange={handleChange}
             placeholder="Please Enter the URL to find this gift"
             name="description"
+            id="form-entry"
           />
         </Form.Group>
 
         <Toast className="alert" show={nameToast} onClose={toggleNameToast}>
-          <Toast.Header>Suggestion Name</Toast.Header>
+          <Toast.Header className="alert">Suggestion Name</Toast.Header>
           <Toast.Body>
             A Gift Name is Required to make a suggestion! Please enter a name of
             your gift to continue
@@ -146,7 +151,7 @@ export default function Suggested() {
         </Toast>
 
         <Button type="submit" variant="secondary">
-          Suggest!
+          Suggest This Gift!
         </Button>
       </Form>
       <br />

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
 
 export default function SuggestedList() {
   //constant definitions for state
@@ -21,7 +23,6 @@ export default function SuggestedList() {
   const getSuggested = async () => {
     try {
       const url = "https://gifter-backend-api.herokuapp.com/suggestion";
-      // const url = "http://localhost:4500/gifts/";
 
       const suggestedList = await axios.get(url);
       setSuggest(suggestedList.data);
@@ -32,27 +33,31 @@ export default function SuggestedList() {
   };
   //info render on screen
   return (
-    <div className="list">
-      <h3>Lidst of Suggestions</h3>
-      <div className="gift-list">
-        {loading ? (
-          suggest.map((suggested) => {
-            return (
-              <ul>
-                <li>{suggested.name}</li>
-                <button
-                  className="view-details"
-                  onClick={() => handleDetails(suggested._id)}
-                >
-                  See Details
-                </button>
-              </ul>
-            );
-          })
-        ) : (
-          <Spinner animation="border" variant="secondary" />
-        )}
+    suggest && (
+      <div className="list">
+        <h3>List of Suggestions</h3>
+        <div className="gift-list">
+          {loading ? (
+            suggest.map((suggested) => {
+              return (
+                <ListGroup className="gift-list">
+                  <ListGroup.Item id="gift">{suggested.name}</ListGroup.Item>
+                  <Button
+                    variant="secondary"
+                    className="view-details"
+                    id="gift-button"
+                    onClick={() => handleDetails(suggested._id)}
+                  >
+                    See Details
+                  </Button>
+                </ListGroup>
+              );
+            })
+          ) : (
+            <Spinner animation="border" variant="secondary" />
+          )}
+        </div>
       </div>
-    </div>
+    )
   );
 }

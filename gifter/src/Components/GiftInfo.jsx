@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 
 export default function GiftInfo({ match }) {
   //constant declarations
@@ -23,24 +25,35 @@ export default function GiftInfo({ match }) {
   };
   return (
     gifts && (
-      <div className="details">
+      <div className="list">
         {loading ? (
-          <div>
-            <h3>THE DETAIL OF GIFTS</h3>
-            <h1>
-              This gift is the {gifts.name}, {gifts.price}
-            </h1>
-            <h3>It is perfect for your friend who is: {gifts.attribute}</h3>
+          <div className="gift-details">
+            <h3 id="gift-header">
+              This Gift is the: {gifts.name}, {gifts.price}
+            </h3>
+            <h4 id="gift-subheader">
+              It is perfect for your friend who is: {gifts.attribute}
+            </h4>
             <p>
-              <img src={gifts.image} alt="Display of Gift" />
+              <Image
+                src={gifts.image}
+                alt="Display of Gift"
+                rounded
+                id="gift-image"
+              />
             </p>
-            <p>{gifts.description}</p>
-            <h6>
-              Let's wrap this up....{" "}
-              <a href={gifts.url} target="_blank" rel="noreferrer">
-                <button className="toShop">Shop for this gift!</button>
-              </a>
-            </h6>
+
+            <p id="gift-description">{gifts.description}</p>
+            <h5 id="gift-link">
+              <div id="gift-shop">
+                Let's wrap this up.... <br />
+                <a href={gifts.url} target="_blank" rel="noreferrer">
+                  <Button id="crud-id" variant="secondary" className="toShop">
+                    Shop for This Gift!
+                  </Button>
+                </a>
+              </div>
+            </h5>
           </div>
         ) : (
           <Spinner animation="border" variant="secondary" />

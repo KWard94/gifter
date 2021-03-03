@@ -86,84 +86,98 @@ export default function SuggestedEdit({ match }) {
         Please Note: If a field is not filled in on this update form it will
         remain unchanged.
       </h6>
-      <Form className="create-form" onSubmit={handleSubmit}>
-        <Form.Group className="name-container">
-          <Form.Label>Gift Name:</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={handleChange}
-            placeholder="Enter a Gift Name"
-            name="name"
-          />
-        </Form.Group>
-        <Form.Group className="price-container">
-          <Form.Label>Price: $</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={handleChange}
-            placeholder="Enter a Price"
-            name="price"
-          />
-        </Form.Group>
-        <Form.Group className="dropdown-container">
-          <Form.Label>Attribute:</Form.Label>
-          <select
-            name="attribute"
-            defaultValue="select"
-            onChange={handleChange}
-          >
-            <option value="select" disabled hidden>
-              Select an Attribute
-            </option>
-            {attribute.map((att) => (
-              <option key={att} value={att}>
-                {att}
+      <div className="suggest-form">
+        <Form className="create-form" onSubmit={handleSubmit}>
+          <Form.Group className="name-container">
+            <Form.Label>Gift Name:</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={handleChange}
+              placeholder={suggested.name}
+              name="name"
+              id="form-entry"
+            />
+          </Form.Group>
+          <Form.Group className="price-container">
+            <Form.Label>Price:</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={handleChange}
+              placeholder={
+                suggested.price ? suggested.price : "Please Enter a Price"
+              }
+              name="price"
+              id="form-entry"
+            />
+          </Form.Group>
+          <Form.Group className="dropdown-container">
+            {/* <Form.Label>Attribute:</Form.Label> */}
+            <select
+              name="attribute"
+              defaultValue="select"
+              onChange={handleChange}
+              id="form-entry"
+            >
+              <option id="select-menu" value="select" disabled hidden>
+                {suggested.attribute}
               </option>
-            ))}
-          </select>
-        </Form.Group>
-        <Form.Group className="textarea">
-          {/* <Form.Label>Description:</Form.Label> */}
-          <Form.Control
-            type="text"
-            as="textarea"
-            rows={5}
-            onChange={handleChange}
-            placeholder="Please Enter a Description"
-            name="description"
-          />
-        </Form.Group>
-        <Form.Group className="url">
-          <Form.Label>Url:</Form.Label>
-          <Form.Control
-            type="text"
-            as="textarea"
-            rows={2}
-            onChange={handleChange}
-            placeholder="Please Enter the URL to find this gift"
-            name="description"
-          />
-        </Form.Group>
+              {attribute.map((att) => (
+                <option key={att} value={att}>
+                  {att}
+                </option>
+              ))}
+            </select>
+          </Form.Group>
+          <Form.Group className="textarea">
+            <Form.Label>Description:</Form.Label>
+            <Form.Control
+              type="text"
+              as="textarea"
+              rows={5}
+              onChange={handleChange}
+              placeholder={
+                suggested.description
+                  ? suggested.description
+                  : "Please Enter a Description"
+              }
+              name="description"
+              id="form-entry"
+            />
+          </Form.Group>
+          <Form.Group className="url">
+            <Form.Label>Url:</Form.Label>
+            <Form.Control
+              type="text"
+              as="textarea"
+              rows={2}
+              onChange={handleChange}
+              placeholder={suggested.url ? suggested.url : "Please Enter a URL"}
+              name="description"
+              id="form-entry"
+            />
+          </Form.Group>
 
-        {/* **********    add toast functionality here */}
-        <Toast className="alert" show={nameToast} onClose={toggleNameToast}>
-          <Toast.Header>Suggestion Name</Toast.Header>
-          <Toast.Body>
-            A Gift Name is Required to make a suggestion! Please enter a name of
-            your gift to continue
-          </Toast.Body>
-        </Toast>
-        <Toast className="alert" show={attToast} onClose={toggleAttToast}>
-          <Toast.Header>Attribute Selection</Toast.Header>
-          <Toast.Body>
-            An Attribute is required for your gift to be used in this app!
-            Please select an attribute from the dropdown menu in the above form
-            to continue.
-          </Toast.Body>
-        </Toast>
+          <Toast className="alert" show={nameToast} onClose={toggleNameToast}>
+            <Toast.Header className="alert">Suggestion Name</Toast.Header>
+            <Toast.Body>
+              A Gift Name is Required to make a suggestion! Please enter a name
+              of your gift to continue
+            </Toast.Body>
+          </Toast>
+          <Toast className="alert" show={attToast} onClose={toggleAttToast}>
+            <Toast.Header>Attribute Selection</Toast.Header>
+            <Toast.Body>
+              An Attribute is required for your gift to be used in this app!
+              Please select an attribute from the dropdown menu in the above
+              form to continue.
+            </Toast.Body>
+          </Toast>
 
-        <Button type="submit">Submit</Button>
-      </Form>
+          <Button type="submit" variant="secondary">
+            Suggest This Gift!
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 }

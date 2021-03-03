@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import axios from "axios";
 
 export default function SuggestedDetails({ match }) {
@@ -39,30 +40,40 @@ export default function SuggestedDetails({ match }) {
 
   return (
     suggested && (
-      <div className="details">
+      <div className="list">
         {loading ? (
-          <div>
-            <h3>
-              This gift is the {suggested.name}, {suggested.price}
+          <div className="gift-details">
+            <h3 id="gift-header">
+              This gift is the: {suggested.name}, {suggested.price}
             </h3>
-            <h4>It is perfect for your friend who is: {suggested.attribute}</h4>
-            <p>{/* <img src={suggested.image} alt="Display of Gift" /> */}</p>
-            <p>{suggested.description}</p>
-            <h5>
-              Let's wrap this up.... <br />
+            <h4 id="gift-subheader">
+              It is perfect for your friend who is: {suggested.attribute}
+            </h4>
+            <p>
+              {suggested.image ? (
+                <img src={suggested.image} alt="Display of Gift" />
+              ) : null}
+            </p>
+            <p id="gift-description">{suggested.description}</p>
+            {suggested.url ? (
               <a href={suggested.url} target="_blank" rel="noreferrer">
-                <Button variant="secondary" className="toShop">
-                  Shop for This Gift!
+                <Button id="crud-id" variant="secondary" className="toShop">
+                  Shop for This Suggestion!
                 </Button>
               </a>
+            ) : null}
+            <h5 id="gift-link">
+              Let's wrap this up.... <br />
               <div className="crud">
                 <Button
+                  id="crud-id"
                   variant="outline-danger"
                   onClick={() => deleteSuggested()}
                 >
                   Delete This Suggestion
                 </Button>
                 <Button
+                  id="crud-id"
                   variant="outline-success"
                   onClick={() => history.push(`/edit/${suggested._id}`)}
                 >

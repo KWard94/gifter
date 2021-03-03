@@ -15,6 +15,13 @@ ul {
   color: var(--text-body);
 }
 
+.alert {
+  background-color: var(--text-accent);
+  color: var(--text-accent);
+  font-size: 32px;
+  text-align: center;
+}
+
 .attributes {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -54,6 +61,12 @@ ul {
   max-width: 40%;
 }
 
+#home-gift-button,
+#list-item {
+  font-size: 20px;
+  width: 40%;
+}
+
 .header {
   background-color: var(--bg-second);
   width: 100%;
@@ -88,7 +101,11 @@ ul {
 
   background-color: var(--bg-main);
   width: 100%;
-  min-height: 25rem;
+  min-height: 40rem;
+}
+
+.home-list {
+  padding: 3rem;
 }
 
 .list {
@@ -108,6 +125,7 @@ ul {
   justify-content: center;
   align-items: center;
   margin: 1rem;
+  width: 50rem;
 }
 
 .name-input {
@@ -147,12 +165,28 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 25px;
+}
+
+.gift-details {
+  font-size: 20px;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
 }
 
 .crud {
   display: flex;
   justify-content: space-evenly;
   margin: 1rem;
+}
+
+#crud-id {
+  margin: 1rem;
+  font-size: 20px;
 }
 
 .link {
@@ -168,6 +202,11 @@ ul {
   /* background-color: var(--text-accent); */
 }
 
+.loader {
+  position: absolute;
+  margin-left: 35%;
+}
+
 .view-details {
   height: 60%;
 }
@@ -175,6 +214,31 @@ ul {
 #att-button {
   font-size: 30px;
   width: 15rem;
+}
+
+#gift-header {
+  font-size: 50px;
+}
+#gift-subheader {
+  font-size: 35px;
+}
+
+#gift-description,
+#gift-link {
+  font-size: 30px;
+}
+
+#gift-shop {
+  display: flex;
+  align-items: center;
+}
+
+#gift-image {
+  width: 12rem;
+}
+
+#form-entry {
+  width: 40rem;
 }
 
 #gift {
@@ -188,6 +252,14 @@ ul {
   font-size: 90px;
   /* border: solid black 2px; */
   width: 80%;
+}
+
+#list-title {
+  font-size: 40px;
+}
+
+#select-menu {
+  color: var(--text-body);
 }
 
 #subtitle {
