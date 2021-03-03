@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Toast from "react-bootstrap/Toast";
 import axios from "axios";
 
 export default function SuggestedEdit({ match }) {
@@ -26,6 +27,8 @@ export default function SuggestedEdit({ match }) {
 
   //constant definitions for state
   const [suggested, setSuggested] = useState(initSuggest);
+  const [nameToast, setNameToast] = useState(false);
+  const [attToast, setAttToast] = useState(false);
   const history = useHistory();
 
   //function definitions
@@ -36,18 +39,21 @@ export default function SuggestedEdit({ match }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // gift names are REQUIRED in this schema
-    // force the user to give the character a name before they can submit
-    if (!suggested.name || suggested.name === "") {
-      alert("A Name is Required");
+    // gift names are required in this schema, force the user to give the suggestion a name. Attributes are required for function of the site
+    if (!suggested.name || suggested.name === " ") {
+      setNameToast(true);
       return;
     } else if (!suggested.attribute) {
-      alert("An Attribute is Required");
+      setAttToast(true);
       return;
     } else {
       updateSuggestion().then(() => history.push(`/suggested`));
     }
   };
+  console.log();
+
+  const toggleNameToast = () => setNameToast(!nameToast);
+  const toggleAttToast = () => setAttToast(!attToast);
 
   //api call for getting the suggestion to edit, find by id
   useEffect(() => getSuggested(match.params.id), []);
@@ -75,7 +81,11 @@ export default function SuggestedEdit({ match }) {
 
   return (
     <div>
-      <h1>EDIT FORM HERE</h1>
+      <h1>Edit This Suggestion!</h1>
+      <h6>
+        Please Note: If a field is not filled in on this update form it will
+        remain unchanged.
+      </h6>
       <Form className="create-form" onSubmit={handleSubmit}>
         <Form.Group className="name-container">
           <Form.Label>Gift Name:</Form.Label>
@@ -136,6 +146,21 @@ export default function SuggestedEdit({ match }) {
         </Form.Group>
 
         {/* **********    add toast functionality here */}
+        <Toast className="alert" show={nameToast} onClose={toggleNameToast}>
+          <Toast.Header>Suggestion Name</Toast.Header>
+          <Toast.Body>
+            A Gift Name is Required to make a suggestion! Please enter a name of
+            your gift to continue
+          </Toast.Body>
+        </Toast>
+        <Toast className="alert" show={attToast} onClose={toggleAttToast}>
+          <Toast.Header>Attribute Selection</Toast.Header>
+          <Toast.Body>
+            An Attribute is required for your gift to be used in this app!
+            Please select an attribute from the dropdown menu in the above form
+            to continue.
+          </Toast.Body>
+        </Toast>
 
         <Button type="submit">Submit</Button>
       </Form>

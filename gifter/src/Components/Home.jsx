@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export default function Home() {
   //Constant declarations and states
@@ -74,42 +77,47 @@ export default function Home() {
   //below the information from the attribute call is rendered on screen
   return (
     <div className="homepage">
-      <div className="intro">
-        <h1>
-          Select From the List of Attributes Below to Find the Perfect Gift that
-          You Have Been Searching For!
-        </h1>
-      </div>
-      <form>
-        <h4>
-          Who is this gift for?{" "}
-          <input
-            type="text"
-            className="name"
-            onChange={(name) => handleName(name)}
-          />
-        </h4>
-      </form>
-      <div className="attributes">
-        {loading ? (
-          attributes.map((attribute) => {
-            return (
-              <ul>
-                <li>
-                  <button
-                    id="att-button"
-                    value={attribute.attribute}
-                    onClick={(att) => handleSelect(att, "value")}
-                  >
-                    {attribute.attribute}
-                  </button>
-                </li>
-              </ul>
-            );
-          })
-        ) : (
-          <Spinner animation="border" variant="secondary" />
-        )}
+      <div className="att-container">
+        <div className="intro">
+          <h1>
+            Select From the List of Attributes Below to Find the Perfect Gift
+            that You Have Been Searching For!
+          </h1>
+        </div>
+        <div className="name-input">
+          <Form>
+            <Form.Label>Who is This Gift For?</Form.Label>
+            <Form.Control
+              type="text"
+              className="name"
+              size="lg"
+              placeholder="Enter Name Here"
+              onChange={(name) => handleName(name)}
+            />
+          </Form>
+        </div>
+        <div className="attributes">
+          {loading ? (
+            attributes.map((attribute) => {
+              return (
+                <ul>
+                  <li>
+                    <Button
+                      variant="outline-secondary"
+                      id="att-button"
+                      value={attribute.attribute}
+                      onClick={(att) => handleSelect(att, "value")}
+                    >
+                      {attribute.attribute}
+                    </Button>
+                  </li>
+                </ul>
+              );
+            })
+          ) : (
+            <Spinner animation="border" variant="secondary" />
+          )}
+        </div>
       </div>
 
       {/* below here is rendered list of suggested gifts*/}
@@ -124,15 +132,20 @@ export default function Home() {
 
         {sorted.map((gift) => {
           return (
-            <ul className="gift-list" key={gift._id}>
-              <li>{gift.name}</li>
-              <button
+            <div className="results">
+              <ListGroup className="gift-list" key={gift._id}>
+                <ListGroup.Item>{gift.name}</ListGroup.Item>
+              </ListGroup>
+
+              <Button
+                variant="secondary"
                 className="view-details"
+                size="sm"
                 onClick={() => handleDetails(gift._id)}
               >
                 View Gift Details
-              </button>
-            </ul>
+              </Button>
+            </div>
           );
         })}
       </div>
