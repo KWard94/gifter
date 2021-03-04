@@ -271,3 +271,53 @@ ul {
 #quote {
   font-size: 25px;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    height: 15rem;
+  }
+  .navbar {
+    display: flex;
+    flex-direction: column;
+  }
+  .attributes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #att-button {
+    font-size: 20px;
+    width: 10rem;
+    margin-right: 2rem;
+  }
+  .nav-container,
+  .navbar {
+    display: flex;
+    align-self: flex-end;
+    position: absolute;
+    border-radius: 15%;
+  }
+  .link {
+    font-size: 12px;
+  }
+  #title {
+    font-size: 60px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+  }
+  #subtitle {
+    font-size: 20px;
+  }
+  .header-words {
+    height: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #intro {
+    font-size: 30px;
+  }
+}
