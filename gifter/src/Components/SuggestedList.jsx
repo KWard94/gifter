@@ -35,13 +35,15 @@ export default function SuggestedList() {
   return (
     suggest && (
       <div className="list">
-        <h3>List of Suggestions</h3>
+        <h3 id="list-title">List of Suggestions</h3>
         <div className="gift-list">
           {loading ? (
             suggest.map((suggested) => {
               return (
-                <ListGroup className="gift-list">
-                  <ListGroup.Item id="gift">{suggested.name}</ListGroup.Item>
+                <ListGroup className="gift-list" key={suggested.id}>
+                  <ListGroup.Item id="gift" key={suggested.id}>
+                    {suggested.name}
+                  </ListGroup.Item>
                   <Button
                     variant="secondary"
                     className="view-details"
