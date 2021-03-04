@@ -17,7 +17,6 @@ ul {
 }
 
 .alert {
-  background-color: var(--text-accent);
   color: var(--text-accent);
   font-size: 32px;
   text-align: center;
