@@ -23,10 +23,8 @@ export default function GiftList() {
   const getGifts = async () => {
     try {
       const url = "https://gifter-backend-api.herokuapp.com/gifts";
-      // const url = "http://localhost:4500/gifts/";
 
       const giftList = await axios.get(url);
-      // console.log(giftList.data);
       setGifts(giftList.data);
       setLoading(true);
     } catch (error) {
@@ -42,8 +40,10 @@ export default function GiftList() {
           {loading ? (
             gifts.map((gift) => {
               return (
-                <ListGroup className="gift-list" key={gift._id}>
-                  <ListGroup.Item id="gift">{gift.name}</ListGroup.Item>
+                <ListGroup className="gift-list">
+                  <ListGroup.Item id="gift" key={gift._id}>
+                    {gift.name}
+                  </ListGroup.Item>
                   <Button
                     variant="secondary"
                     className="view-details"
