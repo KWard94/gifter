@@ -79,7 +79,7 @@ export default function Home() {
     <div className="homepage">
       <div className="att-container">
         <div className="intro">
-          <h1>
+          <h1 id="intro">
             Select From the List of Attributes Below to Find the Perfect Gift
             that You Have Been Searching For!
           </h1>
