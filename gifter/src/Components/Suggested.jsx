@@ -15,6 +15,8 @@ export default function Suggested() {
     "Outdoorsy",
     "Social",
     "Solitary",
+    "Laid-Back",
+    "Crafty",
   ];
   const initSuggest = {
     name: "",

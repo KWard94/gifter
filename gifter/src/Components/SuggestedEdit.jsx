@@ -23,6 +23,8 @@ export default function SuggestedEdit({ match }) {
     "Outdoorsy",
     "Social",
     "Solitary",
+    "Laid-Back",
+    "Crafty",
   ];
 
   //constant definitions for state
