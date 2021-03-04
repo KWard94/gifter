@@ -140,7 +140,7 @@ export default function Suggested() {
           </Toast.Body>
         </Toast>
         <Toast className="alert" show={attToast} onClose={toggleAttToast}>
-          <Toast.Header>Attribute Selection</Toast.Header>
+          <Toast.Header className="alert">Attribute Selection</Toast.Header>
           <Toast.Body>
             An Attribute is required for your gift to be used in this app!
             Please select an attribute from the dropdown menu in the above form
