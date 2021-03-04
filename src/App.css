@@ -52,6 +52,7 @@ ul {
   border-top-right-radius: 17%;
   border: 0.3rem solid var(--text-accent);
   padding: 2rem;
+  font-family: cursive;
 }
 
 .gift-list {

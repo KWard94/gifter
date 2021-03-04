@@ -50,6 +50,7 @@ export default function Home() {
   const getAttributes = async () => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/attributes`;
+      // const url = `http://localhost:4500/attributes`;
 
       const attributeList = await axios.get(url);
       setAttributes(attributeList.data);
@@ -64,6 +65,7 @@ export default function Home() {
   const getGifts = async () => {
     try {
       const url = "https://gifter-backend-api.herokuapp.com/gifts";
+      // const url = "http://localhost:4500/gifts/";
 
       const giftList = await axios.get(url);
       setGifts(giftList.data);
