@@ -37,7 +37,6 @@ export default function SuggestedEdit({ match }) {
   const handleChange = (event) =>
     setSuggested({ ...suggested, [event.target.name]: event.target.value });
 
-  //******************  start here- refactor this handle submit based on how i refactored the handle submit for suggestion post, then add the bootstrap toast function to the alert like in the suggestion post component
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -113,7 +112,6 @@ export default function SuggestedEdit({ match }) {
             />
           </Form.Group>
           <Form.Group className="dropdown-container">
-            {/* <Form.Label>Attribute:</Form.Label> */}
             <select
               name="attribute"
               defaultValue="select"
