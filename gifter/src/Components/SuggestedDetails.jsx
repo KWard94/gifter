@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
 import axios from "axios";
 
 export default function SuggestedDetails({ match }) {
@@ -16,7 +15,6 @@ export default function SuggestedDetails({ match }) {
   const getSuggested = async (id) => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/suggestion/${id}`;
-      // const url = `http://localhost:4500/gifts/${id}`;
 
       const suggestedDet = await axios.get(url);
       setSuggested(suggestedDet.data);
@@ -29,7 +27,6 @@ export default function SuggestedDetails({ match }) {
   const deleteSuggested = async () => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/suggestion/${suggested._id}`;
-      // const url = `http://localhost:4500/gifts/${id}`;
 
       await axios.delete(url);
       history.push("/suggested");
@@ -49,11 +46,6 @@ export default function SuggestedDetails({ match }) {
             <h4 id="gift-subheader">
               It is perfect for your friend who is: {suggested.attribute}
             </h4>
-            <p>
-              {suggested.image ? (
-                <img src={suggested.image} alt="Display of Gift" />
-              ) : null}
-            </p>
             <p id="gift-description">{suggested.description}</p>
             {suggested.url ? (
               <a href={suggested.url} target="_blank" rel="noreferrer">

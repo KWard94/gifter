@@ -15,6 +15,8 @@ export default function Suggested() {
     "Outdoorsy",
     "Social",
     "Solitary",
+    "Laid-Back",
+    "Crafty",
   ];
   const initSuggest = {
     name: "",
@@ -57,11 +59,9 @@ export default function Suggested() {
   const postSuggestion = async () => {
     try {
       const url = `https://gifter-backend-api.herokuapp.com/suggestion`;
-      // const url = `http://localhost:4500/attributes`;
 
       const suggestedGift = await axios.post(url, suggestion);
       console.log(suggestedGift.data);
-      //   setAttributes(attributeList.data);
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +92,6 @@ export default function Suggested() {
           />
         </Form.Group>
         <Form.Group className="dropdown-container">
-          {/* <Form.Label>Attribute:</Form.Label> */}
           <select
             name="attribute"
             defaultValue="select"
@@ -110,7 +109,6 @@ export default function Suggested() {
           </select>
         </Form.Group>
         <Form.Group className="textarea">
-          {/* <Form.Label>Description:</Form.Label> */}
           <Form.Control
             type="text"
             as="textarea"
